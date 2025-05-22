@@ -42,17 +42,17 @@ module "eks" {
   enable_irsa = true
 
   eks_managed_node_groups = {
-    default = {
-      instance_types = ["t3.medium"]
-      min_size       = 1
-      max_size       = 2
-      desired_size   = 1
+  default = {
+    instance_types = ["t3.medium"]
+    min_size       = 1
+    max_size       = 2
+    desired_size   = 1
 
-      iam_role_additional_policies = [
-        "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
-        "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
-        "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-      ]
+    iam_role_additional_policies = {
+      AmazonEKSWorkerNodePolicy         = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+      AmazonEKS_CNI_Policy              = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+      AmazonEC2ContainerRegistryReadOnly = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
     }
   }
+ }
 }
