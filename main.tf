@@ -57,12 +57,6 @@ module "eks" {
  }
 }
 
-provider "helm" {
-  kubernetes {
-    config_path = "~/.kube/config"
-  }
- }
-
 module "delegate" {
   source = "harness/harness-delegate/kubernetes"
   version = "0.2.2"
@@ -77,4 +71,11 @@ module "delegate" {
   replicas = 1
   upgrader_enabled = true
 }
+
+provider "helm" {
+  kubernetes {
+    config_path = "~/.kube/config"
+  }
+ }
+
 
