@@ -15,6 +15,19 @@ module "vpc" {
 
   enable_dns_hostnames = true
   enable_dns_support   = true
+
+  enable_nat_gateway = true
+  single_nat_gateway = true
+
+  public_subnet_tags = {
+    "kubernetes.io/role/elb"                         = "1"
+    "kubernetes.io/cluster/${var.cluster_name}"      = "shared"
+  }
+
+  private_subnet_tags = {
+    "kubernetes.io/role/internal-elb"                = "1"
+    "kubernetes.io/cluster/${var.cluster_name}"      = "shared"
+  }
 }
 
 module "eks" {
@@ -34,6 +47,12 @@ module "eks" {
       min_size       = 1
       max_size       = 2
       desired_size   = 1
+
+      iam_role_additional_policies = [
+        "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+        "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
+        "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+      ]
     }
   }
 }
