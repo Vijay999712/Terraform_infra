@@ -19,10 +19,14 @@ module "vpc" {
   enable_nat_gateway = true
   single_nat_gateway = true
 
+  # This explicitly enables auto-assign public IP on public subnets
   public_subnet_tags = {
     "kubernetes.io/role/elb"                         = "1"
     "kubernetes.io/cluster/${var.cluster_name}"      = "shared"
   }
+
+  # Important: Use this argument to auto-assign public IP on launch
+  map_public_ip_on_launch = true
 
   private_subnet_tags = {
     "kubernetes.io/role/internal-elb"                = "1"
