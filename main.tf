@@ -51,6 +51,7 @@ module "eks" {
     min_size       = 1
     max_size       = 2
     desired_size   = 1
+    key_name       = "vijay_harness"
 
     iam_role_additional_policies = {
       AmazonEKSWorkerNodePolicy         = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
